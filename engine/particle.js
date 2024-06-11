@@ -1,8 +1,10 @@
+import Transform from "./transform";
+
 class Particle {
-  constructor(x, y, velocity) {
+  constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.velocity = velocity;
+    this.velocity = 0;
   }
 
   integrate(delta_time) {
