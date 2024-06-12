@@ -1,33 +1,24 @@
-import run from "./engine";
-import Two from "https://cdn.skypack.dev/two.js@latest";
+import { Two } from "./vendor/two.js";
+import { run, physics } from "./engine";
+import Particle from "./engine/particle.js";
+
+const two = new Two({ fullscreen: true }).appendTo(document.body);
+
+let particle;
 
 run({
-  on_tick: () => {
-    // Make an instance of two and place it on the page.
-    const two = new Two({ fullscreen: true }).appendTo(document.body);
+  on_init: () => {
+    particle = physics.addParticle(new Particle(0, 0));
+    particle.velocity = { x: 0, y: 0.1 };
+  },
+  on_tick: ({ deltaTime }) => {
+    two.clear();
 
-    // Two.js has convenient methods to make shapes and insert them into the scene.
     var radius = 50;
-    var x = two.width * 0.5;
-    var y = two.height * 0.5 - radius * 1.25;
+    var x = particle.x;
+    var y = particle.y;
     var circle = two.makeCircle(x, y, radius);
 
-    y = two.height * 0.5 + radius * 1.25;
-    var width = 100;
-    var height = 100;
-    var rect = two.makeRectangle(x, y, width, height);
-
-    // The object returned has many stylable properties:
-    circle.fill = "#FF8000";
-    // And accepts all valid CSS color:
-    circle.stroke = "orangered";
-    circle.linewidth = 5;
-
-    rect.fill = "rgb(0, 200, 255)";
-    rect.opacity = 0.75;
-    rect.noStroke();
-
-    // Don’t forget to tell two to draw everything to the screen
     two.update();
   },
 });
