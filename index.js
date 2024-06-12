@@ -9,7 +9,7 @@ let particle;
 run({
   on_init: () => {
     particle = physics.addParticle(new Particle(0, 0));
-    particle.velocity = { x: 0, y: 0.1 };
+    particle.acceleration = { x: 0, y: 9.8 };
   },
   on_tick: ({ deltaTime }) => {
     two.clear();
