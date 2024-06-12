@@ -9,7 +9,7 @@ let renderer;
 
 run({
   on_init: () => {
-    particle = physics.addParticle(new Particle({ x: 0, y: 0, mass: 1 }));
+    particle = physics.addParticle(new Particle({ x: 50, y: 0, mass: 1 }));
     particle.addForce({ x: 0, y: 9.8 });
 
     var radius = 50;

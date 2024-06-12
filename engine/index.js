@@ -9,6 +9,22 @@ export const physics = {
       particle.integrate(deltaTime);
     }
   },
+  generateContacts: () => {
+    const contacts = [];
+    for (let i = 0; i < physics.particles.length; i++) {
+      for (let j = i + 1; j < physics.particles.length; j++) {
+        const particle1 = physics.particles[i];
+        const particle2 = physics.particles[j];
+        // 碰撞检测
+        const result = particle1.detectCollision(particle2);
+        if (result.collisionExits) {
+          contacts.push(result.resultingContact);
+        }
+      }
+    }
+    return contacts;
+  },
+  resolveContacts: () => {},
 };
 
 export function run({ on_init, on_tick }) {
