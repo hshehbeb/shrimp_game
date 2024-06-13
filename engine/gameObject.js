@@ -1,12 +1,13 @@
-import { physics, two } from "./index.js";
 import Particle from "./particle.js";
 import { CircularCollider } from "./collision.js";
 
-export class GameObject {
+class GameObject {
   constructor({ x, y, renderer }) {
     // 设置particle
     this.radius = 50;
-    this.particle = physics.addParticle(new Particle({ x: x, y: y, mass: 1 }));
+    this.particle = window.physics.addParticle(
+      new Particle({ x: x, y: y, mass: 1 }),
+    );
     this.particle.setCollider(
       new CircularCollider({
         parentParticle: this.particle,
@@ -24,3 +25,5 @@ export class GameObject {
     this.renderer.position.y = this.particle.y;
   }
 }
+
+export default GameObject;

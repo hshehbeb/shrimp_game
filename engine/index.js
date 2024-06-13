@@ -1,9 +1,9 @@
 import { projection } from "./math.js";
 import { Two } from "../vendor/two.js";
 
-export const two = new Two({ fullscreen: true }).appendTo(document.body);
+window.two = new Two({ fullscreen: true }).appendTo(document.body);
 
-export const physics = {
+window.physics = {
   particles: [],
   addParticle: (particle) => {
     physics.particles.push(particle);
