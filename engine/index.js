@@ -1,4 +1,7 @@
 import { projection } from "./math.js";
+import { Two } from "../vendor/two.js";
+
+export const two = new Two({ fullscreen: true }).appendTo(document.body);
 
 export const physics = {
   particles: [],
@@ -57,5 +60,8 @@ export function run({ on_init, on_tick }) {
 
     // tick回调
     on_tick({ deltaTime: refreshRate });
+
+    // 更新渲染
+    two.update();
   }, refreshRate * 1000);
 }

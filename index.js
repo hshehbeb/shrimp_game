@@ -1,39 +1,19 @@
-import { Two } from "./vendor/two.js";
-import { run, physics } from "./engine";
-import Particle from "./engine/particle.js";
-import { CircularCollider } from "./engine/collision.js";
+import { run, two } from "./engine";
+import { GameObject } from "./engine/gameObject.js";
 
-const two = new Two({ fullscreen: true }).appendTo(document.body);
-
-let particle;
-let renderer;
+let goList = [];
 
 run({
   on_init: () => {
-    particle = physics.addParticle(new Particle({ x: 100, y: 0, mass: 1 }));
-    particle.setCollider(
-      new CircularCollider({ parentParticle: particle, radius: 50 }),
-    );
-
-    var radius = 50;
-    var x = particle.x;
-    var y = particle.y;
-    renderer = two.makeCircle(x, y, radius);
-
-    // Particle2
-    const particle2 = physics.addParticle(
-      new Particle({ x: 300, y: 0, mass: 1 }),
-    );
-    particle2.setCollider(
-      new CircularCollider({ parentParticle: particle2, radius: 50 }),
-    );
-    renderer = two.makeCircle(particle2.x, particle2.y, radius);
-
-    console.log(physics.generateContacts());
+    goList = [
+      new GameObject({ x: 100, y: 300, renderer: two.makeCircle(0, 0, 50) }),
+      new GameObject({ x: 300, y: 300, renderer: two.makeCircle(0, 0, 50) }),
+    ];
   },
   on_tick: ({ deltaTime }) => {
-    renderer.position.y = particle.y;
-
-    two.update();
+    // 更新gameObjects
+    for (const go of goList) {
+      go.update(deltaTime);
+    }
   },
 });
