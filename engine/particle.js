@@ -8,6 +8,15 @@ class Particle {
 
     this.velocity = { x: 0, y: 0 };
     this.acceleration = { x: 0, y: 0 };
+    this.collider = null;
+  }
+
+  setCollider(collider) {
+    this.collider = collider;
+  }
+
+  detectCollision(otherParticle) {
+    return this.collider.detectCollision(otherParticle);
   }
 
   addForce({ x, y }) {

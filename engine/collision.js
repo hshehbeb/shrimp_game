@@ -1,15 +1,15 @@
-import {distance} from "./math";
+import { distance } from "./math.js";
 
-class Contact {
-  constructor({ collider1, collider2, penetration, normal }) {
-    this.coliider1 = collider1;
-    this.collider2 = collider2;
+export class Contact {
+  constructor({ particle1, particle2, penetration, normal }) {
+    this.particle1 = particle1;
+    this.particle2 = particle2;
     this.penetration = penetration;
     this.normal = normal;
   }
 }
 
-class CircularCollider {
+export class CircularCollider {
   constructor({ radius, parentParticle }) {
     this.radius = radius;
     this.parentParticle = parentParticle;
@@ -17,16 +17,30 @@ class CircularCollider {
 
   detectCollision(otherParticle) {
     if (otherParticle.collider instanceof CircularCollider) {
-      handleCircleCircleCollision(this.parentParticle, otherParticle);
+      return handleCircleCircleCollision(this.parentParticle, otherParticle);
     } else {
-      handleDefaultCollision(this.parentParticle, otherParticle);
+      return handleDefaultCollision(this.parentParticle, otherParticle);
     }
   }
 }
 
 /// Helpers ///
 function handleCircleCircleCollision(particle1, particle2) {
-  if (distance())
+  const dist = distance({ particle1: particle1, particle2: particle2 });
+  const radiusSum = particle1.collider.radius + particle2.collider.radius;
+  if (dist < radiusSum) {
+    return {
+      collisionExits: true,
+      resultingContact: new Contact({
+        particle1,
+        particle2,
+        normal: { x: particle2.x - particle1.x, y: particle2.y - particle1.y },
+        penetration: radiusSum - dist,
+      }),
+    };
+  } else {
+    return { collisionExits: false };
+  }
 }
 
 function handleDefaultCollision(particle1, particle2) {

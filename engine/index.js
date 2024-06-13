@@ -24,7 +24,7 @@ export const physics = {
     }
     return contacts;
   },
-  resolveContacts: () => {},
+  resolveContacts: ({ contacts }) => {},
 };
 
 export function run({ on_init, on_tick }) {
@@ -32,7 +32,7 @@ export function run({ on_init, on_tick }) {
   on_init();
 
   // 刷新率，以秒结算
-  const refreshRate = 0.1;
+  const refreshRate = 0.5;
   const timeId = setInterval(() => {
     // 更新物理模拟
     physics.integrate({ deltaTime: refreshRate });
