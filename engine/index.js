@@ -1,3 +1,5 @@
+import { projection } from "./math.js";
+
 export const physics = {
   particles: [],
   addParticle: (particle) => {
@@ -24,7 +26,23 @@ export const physics = {
     }
     return contacts;
   },
-  resolveContacts: ({ contacts }) => {},
+  resolveContacts: ({ contacts }) => {
+    for (const contact of contacts) {
+      const [particle1, particle2] = [contact.particle1, contact.particle2];
+      // 计算分离速度
+      const separatingVelocity = projection({
+        vector1: particle1.velocity - particle2.velocity,
+        vector2: contact.normal,
+      });
+      const restitution = 0.9;
+      const newVelocity = -separatingVelocity * restitution;
+      // 应用分离速度
+      const massSum = particle1.mass + particle2.mass;
+      particle1.velocity += (newVelocity * particle2.mass) / massSum;
+      particle2.velocity -= (newVelocity * particle1.mass) / massSum;
+      // 调整位置，避免collider重叠
+    }
+  },
 };
 
 export function run({ on_init, on_tick }) {

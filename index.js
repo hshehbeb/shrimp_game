@@ -10,19 +10,19 @@ let renderer;
 
 run({
   on_init: () => {
-    particle = physics.addParticle(new Particle({ x: 50, y: 0, mass: 1 }));
+    particle = physics.addParticle(new Particle({ x: 100, y: 0, mass: 1 }));
     particle.setCollider(
       new CircularCollider({ parentParticle: particle, radius: 50 }),
     );
-    // particle.addForce({ x: 0, y: 9.8 });
 
     var radius = 50;
     var x = particle.x;
     var y = particle.y;
     renderer = two.makeCircle(x, y, radius);
 
+    // Particle2
     const particle2 = physics.addParticle(
-      new Particle({ x: 70, y: 0, mass: 1 }),
+      new Particle({ x: 300, y: 0, mass: 1 }),
     );
     particle2.setCollider(
       new CircularCollider({ parentParticle: particle2, radius: 50 }),
